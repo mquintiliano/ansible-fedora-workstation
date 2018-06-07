@@ -1,0 +1,12 @@
+---
+- name: Fedora Workstation Post Install
+  hosts: localhost
+  connection: local
+  become: yes
+  remote_user: root
+
+  roles:
+    - common
+    - workstation
+    - rh-internal
+    - tweaks
