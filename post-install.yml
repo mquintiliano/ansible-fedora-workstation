@@ -8,5 +8,4 @@
   roles:
     - common
     - workstation
-    - rh-internal
     - tweaks
