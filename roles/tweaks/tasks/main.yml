@@ -1,0 +1,35 @@
+---
+# tasks file for tweaks
+
+#
+# heikoada/gtk-themes
+#
+
+- name: Install heikoada/gtk-themes copr repo
+  copy: src=_copr_heikoada-gtk-themes.repo dest=/etc/yum.repos.d/ owner=root group=root mode=0644
+
+- name: Importing rpm-gpg key of heikoada/gtk-themes copr repo
+  rpm_key: 
+    key=https://copr-be.cloud.fedoraproject.org/results/heikoada/gtk-themes/pubkey.gpg
+    state=present
+
+- name: Install Adapta GTK theme
+  dnf: name=adapta-gtk-theme-gtk3 state=latest
+
+#
+# Paper icon theme
+#
+
+- name: Install Paper Icon theme
+  dnf: name=paper-icon-theme state=latest
+
+#
+# La Capitaine icon theme
+#
+
+  # - name: Inatall La Capitaine icon theme
+  #   git: repo=https://github.com/keeferrourke/la-capitaine-icon-theme.git
+  #        dest=/home/{{ homedir }}/.icons/la-capitaine/
+  # 
+  # - name: Set permission on La Capitaine icon theme dir
+  #   file: path=/home/{{ username }}/.icons/ owner={{ username }} group={{ username }} recurse=yes

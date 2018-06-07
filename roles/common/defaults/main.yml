@@ -1,0 +1,4 @@
+---
+# defaults file for common
+addrepo_adobe: true
+add_rpmfusion_nonfree: true

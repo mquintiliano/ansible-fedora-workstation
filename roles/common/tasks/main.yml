@@ -1,0 +1,96 @@
+---
+# tasks file for common
+
+
+#
+# Insntall Ansible required packages
+#
+
+- name: Insntall Ansible dnf module required packages
+  command: /usr/bin/dnf install -y python2-dnf
+
+#
+# Insntall SELinux required package
+#
+
+- name: Insntall SELinux required package
+  dnf: name=libselinux-python state=present
+
+#
+# Initial system update
+#
+
+- name: Updating system
+  dnf: name='*' state=latest
+
+#
+# http://rpmfusion.org/Configuration
+#
+
+- name: Install the RPM Fusion free repo
+  dnf: 
+    name=https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-{{ ansible_distribution_major_version }}.noarch.rpm
+    state=present
+
+- name: Install the RPM Fusion nonfree repo
+  dnf: 
+    name=https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-{{ ansible_distribution_major_version }}.noarch.rpm
+    state=present
+  when: add_rpmfusion_nonfree == true
+
+#
+# http://rpmfusion.org/keys
+#
+
+- name: Importing rpm-gpg key from RPM Fusion free repo
+  rpm_key: 
+    key=/etc/pki/rpm-gpg/RPM-GPG-KEY-rpmfusion-free-fedora-{{ ansible_distribution_major_version }}-primary
+    state=present
+ 
+- name: Importing rpm-gpg key from RPM Fusion nonfree repo
+  rpm_key: 
+    key=/etc/pki/rpm-gpg/RPM-GPG-KEY-rpmfusion-nonfree-fedora-{{ ansible_distribution_major_version }}-primary
+    state=present
+  when: add_rpmfusion_nonfree == true
+
+#
+# xsos - Summarize system info from sosreports | https://github.com/ryran/xsos
+#
+
+- name: Install xsos repo
+  dnf:
+    name=http://people.redhat.com/rsawhill/rpms/latest-rsawaroha-release.rpm
+    state=present
+
+- name: Importing rpm-gpg key from xsos repo
+  rpm_key: 
+    key=/etc/pki/rpm-gpg/RPM-GPG-KEY-rsaw.aroha
+    state=present
+
+#
+# https://get.adobe.com/flashplayer/
+#
+
+- name: Install Adobe linux repo
+  dnf: 
+    name=http://linuxdownload.adobe.com/adobe-release/adobe-release-{{ ansible_userspace_architecture }}-1.0-1.noarch.rpm
+    state=present
+  when: addrepo_adobe == true
+
+- name: Importing rpm-gpg key from Adobe linux repo
+  rpm_key:
+    key=/etc/pki/rpm-gpg/RPM-GPG-KEY-adobe-linux
+    state=present
+  when: addrepo_adobe == true
+
+#
+# Google Chrome browser
+#
+
+#- name: Install Google Chrome repo
+#  copy: src=google-chrome.repo dest=/etc/yum.repos.d/ owner=root group=root mode=0644
+
+#- name: Importing rpm-gpg key of Google Chrome
+#  rpm_key:
+#    key=https://dl-ssl.google.com/linux/linux_signing_key.pub
+#    state=present

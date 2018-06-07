@@ -1,0 +1,63 @@
+---
+# tasks file for roles/workstation
+
+#
+# Additional packages
+#
+
+- name: install the 'Virtualization' package group
+  dnf: name="@Virtualization" state=present
+
+- name: Install virtio-win repo
+  get_url: 
+    url: https://fedorapeople.org/groups/virt/virtio-win/virtio-win.repo
+    dest: /etc/yum.repos.d/virtio-win.repo
+    mode: 644
+
+- name: Install virtio-win package
+  dnf: name=virtio-win state=latest
+
+- name: "Installing additional packages"
+  dnf: name={{ item }} state=present
+  with_items:
+  - atomic
+  - axel
+  - docker
+  - docker-vim
+  - fence-virtd
+  - fence-virtd-multicast
+  - fence-agents-virsh
+  - flash-plugin
+  - flatpak
+  - fprintd
+  - gimp
+#  - google-chrome-stable
+  - gnome-terminal-nautilus
+  - gnome-tweak-tool
+  - hexchat
+  - htop
+  - icedtea-web
+  - inkscape
+  - krb5-workstation
+  - levien-inconsolata-fonts
+  - libguestfs-tools
+  - NetworkManager-openvpn
+  - NetworkManager-openvpn-gnome
+  - openldap-clients  
+  - p7zip
+  - p7zip-plugins
+  - ranger
+  - rsar
+  - rxvt-unicode-256color 
+  - sx
+  - tmux
+  - vagrant
+  - vagrant-hostmanager
+  - vagrant-libvirt
+  - vagrant-libvirt-doc
+  - vagrant-registration
+  - vagrant-sshfs
+  - vim-enhanced
+  - wireshark
+  - xsos
+  - youtube-dl
