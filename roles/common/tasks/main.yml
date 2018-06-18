@@ -6,7 +6,7 @@
 # Insntall Ansible required packages
 #
 
-- name: Insntall Ansible dnf module required packages
+- name: Insntall required packages by Ansible dnf module 
   command: /usr/bin/dnf install -y python2-dnf
 
 #
