@@ -8,6 +8,8 @@
 
 - name: Insntall required packages by Ansible dnf module 
   command: /usr/bin/dnf install -y python2-dnf
+  args:
+    warn: no
 
 #
 # Insntall SELinux required package
